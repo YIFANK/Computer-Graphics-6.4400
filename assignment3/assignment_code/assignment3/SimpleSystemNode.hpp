@@ -17,7 +17,7 @@ class SimpleSystemNode : public SceneNode {
   SimpleSystemNode(IntegratorType integrator_type, float dt)
       : m_dt(dt), m_time(0.0f) {
     // initialize particle state
-    m_state.positions.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
+    m_state.positions.push_back(glm::vec3(-1.0f, 0.0f, 0.0f));
     m_state.velocities.push_back(glm::vec3(0.0f));
 
     // create integrator (Forward Euler)
@@ -30,11 +30,22 @@ class SimpleSystemNode : public SceneNode {
   }
 
   void Update(double delta_time) override {
+    if (InputManager::GetInstance().IsKeyPressed('R')) {
+      Reset();
+    }
     int steps = static_cast<int>(delta_time / static_cast<double>(m_dt));
     for (int i = 0; i < steps; ++i) {
       m_state = m_integrator->Integrate(m_system, m_state, m_time, m_dt);
       m_time += m_dt;
     }
+    GetTransform().SetPosition(m_state.positions[0]);
+  }
+  void Reset() {
+    m_state.positions.clear();
+    m_state.velocities.clear();
+    m_state.positions.push_back(glm::vec3(1.0f, 0.0f, 0.0f));
+    m_state.velocities.push_back(glm::vec3(0.0f));
+    m_time = 0.0f;
     GetTransform().SetPosition(m_state.positions[0]);
   }
 

@@ -51,11 +51,21 @@ class PendulumSystemNode : public SceneNode {
   }
 
   void Update(double delta_time) override {
+    if (InputManager::GetInstance().IsKeyPressed('R')) {
+      Reset();
+    }
     int steps = static_cast<int>(delta_time / static_cast<double>(m_dt));
     for (int i = 0; i < steps; ++i) {
       m_state = m_integrator->Integrate(m_system, m_state, m_time, m_dt);
       m_time += m_dt;
     }
+    for (int i = 0; i < m_num_particles; i++) {
+      particle_nodes[i]->GetTransform().SetPosition(m_state.positions[i]);
+    }
+  }
+  void Reset() {
+    m_state = m_system.GetInitialState();
+    m_time = 0.0f;
     for (int i = 0; i < m_num_particles; i++) {
       particle_nodes[i]->GetTransform().SetPosition(m_state.positions[i]);
     }

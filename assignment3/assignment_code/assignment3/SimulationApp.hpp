@@ -6,8 +6,9 @@
 #include "IntegratorBase.hpp"
 #include "ParticleState.hpp"
 #include "IntegratorType.hpp"
-#include "SimpleSystem.hpp"
-#include "PendulumSystem.hpp"
+#include "ClothNode.hpp"
+#include "SimpleSystemNode.hpp"
+#include "PendulumSystemNode.hpp"
 
 namespace GLOO {
 class SimulationApp : public Application {
@@ -17,8 +18,10 @@ class SimulationApp : public Application {
                 IntegratorType integrator_type,
                 float integration_step);
   void SetupScene() override;
-
  private:
+  SimpleSystemNode*  simple_node_;
+  PendulumSystemNode* pendulum_node_;
+  ClothNode* cloth_node_;
   IntegratorType integrator_type_;
   float integration_step_;
   std::string app_name_;

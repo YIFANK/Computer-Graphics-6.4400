@@ -55,6 +55,7 @@ int main(int argc, char** argv) {
     double delta_time = (current_tick_time - last_tick_time).count();
     double total_elapsed_time = (current_tick_time - start_tick_time).count();
     app->Tick(delta_time, total_elapsed_time);
+    
     last_tick_time = current_tick_time;
   }
   return 0;

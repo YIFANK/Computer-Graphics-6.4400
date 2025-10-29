@@ -20,7 +20,8 @@
 #include "RK4Integrator.hpp"
 #include "TrapezoidalIntegrator.hpp"
 #include "IntegratorFactory.hpp"
-
+#include "ClothNode.hpp"
+#include "gloo/InputManager.hpp"
 namespace GLOO {
 SimulationApp::SimulationApp(const std::string& app_name,
                              glm::ivec2 window_size,
@@ -31,7 +32,6 @@ SimulationApp::SimulationApp(const std::string& app_name,
       integration_step_(integration_step),
       app_name_(app_name) {
 }
-
 void SimulationApp::SetupScene() {
   SceneNode& root = scene_->GetRootNode();
 
@@ -55,8 +55,13 @@ void SimulationApp::SetupScene() {
   root.AddChild(std::move(point_light_node));
 
   auto simple_node = make_unique<SimpleSystemNode>(integrator_type_, integration_step_);
+  simple_node_ = simple_node.get();
   root.AddChild(std::move(simple_node));
   auto pendulum_node = make_unique<PendulumSystemNode>(integrator_type_, integration_step_, 5);
+  pendulum_node_ = pendulum_node.get();
   root.AddChild(std::move(pendulum_node));
+  auto cloth_node = make_unique<ClothNode>(integrator_type_, integration_step_, 8,8);
+  cloth_node_ = cloth_node.get();
+  root.AddChild(std::move(cloth_node));
 }
 }  // namespace GLOO
