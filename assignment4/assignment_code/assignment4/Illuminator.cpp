@@ -27,8 +27,7 @@ void Illuminator::GetIllumination(const LightComponent& light_component,
     auto point_light_ptr = static_cast<PointLight*>(light_ptr);
     
     // Get the light position from the scene node
-    glm::vec3 light_pos = light_component.GetNodePtr()->GetTransform().GetWorldPosition();
-    
+    glm::vec3 light_pos = light_component.GetNodePtr()->GetTransform().GetPosition();
     // Calculate direction vector from hit point to light (normalized)
     dir_to_light = glm::normalize(light_pos - hit_pos);
     

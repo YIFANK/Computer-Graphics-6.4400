@@ -19,7 +19,7 @@ int main(int argc, const char* argv[]) {
   Tracer tracer(scene_parser.GetCameraSpec(),
                 glm::ivec2(arg_parser.width, arg_parser.height),
                 arg_parser.bounces, scene_parser.GetBackgroundColor(),
-                scene_parser.GetCubeMapPtr(), arg_parser.shadows);
+                scene_parser.GetCubeMapPtr(), arg_parser.shadows, arg_parser.samples, arg_parser.camera_type);
   tracer.Render(*scene, arg_parser.output_file);
   return 0;
 }

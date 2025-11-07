@@ -2,7 +2,7 @@
 #define ARG_PARSER_H_
 
 #include <string>
-
+#include "CameraType.hpp"
 class ArgParser {
  public:
   ArgParser(int argc, const char* argv[]);
@@ -19,11 +19,11 @@ class ArgParser {
   float depth_max;
   size_t bounces;
   bool shadows;
-
+  size_t samples;
   // Supersampling.
   bool jitter;
   bool filter;
-
+  GLOO::CameraType camera_type;
  private:
   void SetDefaultValues();
 };
